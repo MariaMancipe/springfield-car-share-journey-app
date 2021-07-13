@@ -1,0 +1,30 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - |
+        sudo apt-get -y update
+        sudo apt-get -y install npm nodejs
+  build:
+    commands:
+      - |
+        ## Push Container to ECR
+        $(aws ecr get-login --no-include-email --region ${AWS_REGION})
+        docker build --tag ${IMAGE_URI} .
+        docker tag service:latest ${IMAGE_URI}
+        docker push ${IMAGE_URI}
+
+  post_build:
+    commands:
+      - |
+        ## Create Deploy Spec file
+        cat >images.json  <<EOL
+        [
+          {
+              "name": "${SERVICE_NAME}",
+              "imageUri": "${IMAGE_URI}"
+          }
+        ]
+        EOL
+artifacts:
+  files: images.json
