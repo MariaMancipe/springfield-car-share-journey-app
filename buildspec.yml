@@ -4,7 +4,7 @@ phases:
     commands:
       - |
         sudo apt-get -y update
-        sudo apt-get -y install npm nodejs
+        sudo apt-get -y install nginx
   build:
     commands:
       - |
