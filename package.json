@@ -1,0 +1,12 @@
+{
+    "name": "springfield-car-share-journey-app",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": { },
+    "description": "Springfield Backend API",
+    "main": "app.js",
+    "scripts": {
+      "start": "node app.js"
+    }
+}
+  
