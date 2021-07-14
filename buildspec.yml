@@ -10,9 +10,12 @@ phases:
       - |
         ## Push Container to ECR
         $(aws ecr get-login --no-include-email --region ${AWS_REGION})
-        docker build --tag ${IMAGE_URI} .
-        docker tag service:latest ${IMAGE_URI}
-        docker push ${IMAGE_URI}
+        COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+        IMAGE_TAG=${COMMIT_HASH:=latest}
+        docker build --tag ${REPOSITORY_URI}:latest .
+        docker tag ${REPOSITORY_URI}:latest ${REPOSITORY_URI}:$IMAGE_TAG
+        docker push ${REPOSITORY_URI}:latest
+        docker push ${REPOSITORY_URI}:$IMAGE_TAG
 
   post_build:
     commands:
@@ -22,7 +25,7 @@ phases:
         [
           {
               "name": "${SERVICE_NAME}",
-              "imageUri": "${IMAGE_URI}"
+              "imageUri": "${REPOSITORY_URI}:$IMAGE_TAG"
           }
         ]
         EOL
