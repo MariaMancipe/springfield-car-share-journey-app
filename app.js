@@ -1,8 +1,8 @@
 'use strict';
 
 const express = require('express');
-const cors = require('cors')
-const Client = require('pg')
+const cors = require('cors');
+const { Client } = require('pg');
 
 // Constants
 const PORT = 80;
@@ -14,12 +14,12 @@ const client = new Client({
     database: 'CAR_SHARE',
     password: 'CARSHARESPRINGFIELD',
     port: 5432,
-})
+});
 client.connect()
 client.query('SELECT NOW()', (err, res) => {
 console.log(err, res)
     client.end()
-})
+});
 
 
 // App
