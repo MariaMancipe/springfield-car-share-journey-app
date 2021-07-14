@@ -67,7 +67,7 @@ app.post('/journeys', (req, res) => {
         if (error) {
             throw error
         }
-        res.status(200).send(result.rows[0].journey_id)
+        res.status(201).send(result.rows[0])
     });
 });
 
