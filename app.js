@@ -2,24 +2,24 @@
 
 const express = require('express');
 const cors = require('cors');
-const { Client } = require('pg');
+const { Pool } = require('pg');
 
 // Constants
 const PORT = 80;
 const HOST = '0.0.0.0';
 
-const client = new Client({
+const pool = new Pool({
     user: 'CAR_SHARE_USER',
     host: 'maindb-auroradbcluster-1j5z4kof4tywz.cluster-c10zn8atghnj.ca-central-1.rds.amazonaws.com',
     database: 'CAR_SHARE',
     password: 'CARSHARESPRINGFIELD',
     port: 5432,
 });
-client.connect()
-client.query('SELECT NOW()', (err, res) => {
-console.log(err, res)
-    client.end()
-});
+// client.connect()
+// client.query('SELECT NOW()', (err, res) => {
+// console.log(err, res)
+//     client.end()
+// });
 
 
 // App
@@ -35,16 +35,22 @@ app.get('/healthCheck', (req, res) => {
 });
 
 app.get('/journeys', (req, res) => {
-    client.query('SELECT * FROM journeys ORDER BY journey_id ASC', (error, results) => {
+    pool.query('SELECT * FROM journeys ORDER BY journey_id ASC', (error, results) => {
         if (error) {
           throw error
         }
-        res.status(200).json(results.rows)
-    })
+        res.status(200).json(results.rows);
+    });
 });
 
 app.get('/journeys/:journeyId', (req, res) => {
-    res.send(req.params.journeyId);
+    id = req.params.journeyId
+    pool.query('SELECT * FROM journeys WHERE journey_id = $1',[id], (error, results) => {
+        if (error) {
+          throw error
+        }
+        res.status(200).json(results.rows);
+    });
 });
 
 app.post('/journeys', (req, res) => {
