@@ -19,20 +19,24 @@ app.get('/healthCheck', (req, res) => {
     res.send("I'm healthy guys :)");
 });
 
-app.get('/journey', (req, res) => {
+app.get('/journeys', (req, res) => {
     res.send("This is a journey");
 });
 
-app.post('/journey', (req, res) => {
-    res.send("This is a journey");
+app.get('/journeys/:journeyId', (req, res) => {
+    res.send(req.params.journeyId);
 });
 
-app.put('/journey', (req, res) => {
-    res.send("This is a journey");
+app.post('/journeys/:journeyId', (req, res) => {
+    res.send(req.params.journeyId);
 });
 
-app.delete('/journey', (req, res) => {
-    res.send("This is a journey");
+app.put('/journeys/:journeyId', (req, res) => {
+    res.send(req.params.journeyId);
+});
+
+app.delete('/journeys/:journeyId', (req, res) => {
+    res.send(req.params.journeyId);
 });
 
 app.listen(PORT, HOST);
