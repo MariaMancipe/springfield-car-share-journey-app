@@ -2,10 +2,25 @@
 
 const express = require('express');
 const cors = require('cors')
+const pg = require('pg')
 
 // Constants
 const PORT = 80;
 const HOST = '0.0.0.0';
+
+const pgClient = new pg({
+    user: 'CAR_SHARE_USER',
+    host: 'maindb-auroradbcluster-1j5z4kof4tywz.cluster-c10zn8atghnj.ca-central-1.rds.amazonaws.com',
+    database: 'CAR_SHARE',
+    password: 'CARSHARESPRINGFIELD',
+    port: 5432
+});
+
+pgClient.connect()
+pgClient.query('SELECT NOW()', (err, res) => {
+  console.log(err, res)
+  pgClient.end()
+})
 
 // App
 const app = express();
