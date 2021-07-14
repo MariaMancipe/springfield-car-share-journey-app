@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Pool } = require('pg');
 
@@ -25,6 +26,12 @@ const pool = new Pool({
 // App
 const app = express();
 app.use(cors())
+app.use(bodyParser.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
 
 app.get('/', (req, res) => {
   res.send('Hello Maria');
@@ -54,7 +61,7 @@ app.get('/journeys/:journeyId', (req, res) => {
 });
 
 app.post('/journeys', (req, res) => {
-    console.log(req)
+    console.log(req.body)
     const { origin_address, origin_city, destination_address, destination_city, created_on, start_datetime } = req.body
 
     pool.query('INSERT INTO journeys (origin_address, origin_city, destination_address, destination_city, created_on, start_datetime) VALUES ($1, $2, $3, $4, $5, $6)', [origin_address, origin_city, destination_address, destination_city, created_on, start_datetime], (error, result) => {
@@ -62,7 +69,7 @@ app.post('/journeys', (req, res) => {
             throw error
         }
         res.status(201).send(`Journey added with ID: ${result.journeyId}`)
-    })
+    });
 });
 
 app.put('/journeys/:journeyId', (req, res) => {
