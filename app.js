@@ -35,15 +35,21 @@ app.get('/healthCheck', (req, res) => {
 });
 
 app.get('/journeys', (req, res) => {
-    res.send("This is a journey");
+    client.query('SELECT * FROM journeys ORDER BY journey_id ASC', (error, results) => {
+        if (error) {
+          throw error
+        }
+        response.status(200).json(results.rows)
+    })
 });
 
 app.get('/journeys/:journeyId', (req, res) => {
     res.send(req.params.journeyId);
 });
 
-app.post('/journeys/:journeyId', (req, res) => {
-    res.send(req.params.journeyId);
+app.post('/journeys', (req, res) => {
+    text = 'INSERT INTO journeys(origin_address, origin_city) VALUES($1, $2) RETURNING *'
+    values = ['brianc', 'brian.m.carlson@gmail.com']
 });
 
 app.put('/journeys/:journeyId', (req, res) => {
