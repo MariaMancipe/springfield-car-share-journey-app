@@ -3,20 +3,17 @@ phases:
   pre_build:
     commands:
       - |
-        sudo apt-get -y update
-        sudo apt-get -y install nginx
+        $(aws ecr get-login --no-include-email --region ${AWS_REGION})
+        COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+        IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
       - |
         ## Push Container to ECR
-        $(aws ecr get-login --no-include-email --region ${AWS_REGION})
-        COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-        IMAGE_TAG=${COMMIT_HASH:=latest}
         docker build --tag ${REPOSITORY_URI}:latest .
         docker tag ${REPOSITORY_URI}:latest ${REPOSITORY_URI}:$IMAGE_TAG
         docker push ${REPOSITORY_URI}:latest
         docker push ${REPOSITORY_URI}:$IMAGE_TAG
-
   post_build:
     commands:
       - |
