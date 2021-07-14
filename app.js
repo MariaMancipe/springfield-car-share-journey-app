@@ -14,7 +14,6 @@ const client = new Client({
     database: 'CAR_SHARE',
     password: 'CARSHARESPRINGFIELD',
     port: 5432,
-    ssl: true,
 });
 client.connect()
 client.query('SELECT NOW()', (err, res) => {
