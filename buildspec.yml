@@ -1,8 +1,12 @@
 version: 0.2
+env:
+  parameter-store:
+    user_pool_id: /cloudformation/SpringfieldMunicipality/CarShare/Cognito/UserPoolID
 phases:
   pre_build:
     commands:
       - |
+        echo $user_pool_id
         $(aws ecr get-login --no-include-email --region ${AWS_REGION})
         COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
         IMAGE_TAG=${COMMIT_HASH:=latest}

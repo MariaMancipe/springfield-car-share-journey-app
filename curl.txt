@@ -1,5 +1,5 @@
 
 curl --header "Content-Type: application/json" \
     --request POST \
-    --data '{"origin_address":"Address 9876787","origin_city":"Springfield","destination_address":"Address 987898789","destination_city":"Springfield","created_on":"2021-07-14 15:19:25-07","start_datetime":"2021-07-14 15:28:25-07"}' \
+    --data '{"origin_address":"ANDY Address","origin_city":"Springfield","destination_address":"JAMES Address","destination_city":"Springfield","created_on":"2021-07-16 10:19:25-07","start_datetime":"2021-07-16 10:28:25-07"}' \
     http://carshare-alb-2084061157.ca-central-1.elb.amazonaws.com/journeys
