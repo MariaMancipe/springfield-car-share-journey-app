@@ -1,7 +1,4 @@
 version: 0.2
-env:
-  parameter-store:
-    user_pool_id: /cloudformation/SpringfieldMunicipality/CarShare/Cognito/UserPoolID
 phases:
   pre_build:
     commands:
