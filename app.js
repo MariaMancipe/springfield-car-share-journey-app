@@ -4,7 +4,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Pool } = require('pg');
-const aws = require("aws-sdk");
 
 // Constants
 const PORT = 80;
