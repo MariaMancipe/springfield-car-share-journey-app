@@ -10,10 +10,10 @@ const PORT = 80;
 const HOST = '0.0.0.0';
 
 const pool = new Pool();
-pool.query('SELECT NOW()', (err, res) => {
-    console.log(err, res)
-    pool.end()
-})
+// pool.query('SELECT NOW()', (err, res) => {
+//     console.log(err, res)
+//     pool.end()
+// })
 
 
 // App
