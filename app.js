@@ -4,23 +4,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Pool } = require('pg');
+const aws = require("aws-sdk");
 
 // Constants
 const PORT = 80;
 const HOST = '0.0.0.0';
 
-const pool = new Pool({
-    user: 'CAR_SHARE_USER',
-    host: 'maindb-auroradbcluster-1j5z4kof4tywz.cluster-c10zn8atghnj.ca-central-1.rds.amazonaws.com',
-    database: 'CAR_SHARE',
-    password: 'CARSHARESPRINGFIELD',
-    port: 5432,
-});
-// client.connect()
-// client.query('SELECT NOW()', (err, res) => {
-// console.log(err, res)
-//     client.end()
-// });
+const pool = new Pool();
+pool.query('SELECT NOW()', (err, res) => {
+    console.log(err, res)
+    pool.end()
+})
 
 
 // App
