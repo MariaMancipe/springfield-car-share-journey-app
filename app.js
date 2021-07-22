@@ -54,9 +54,9 @@ app.get('/journeys/:journeyId', (req, res) => {
 });
 
 app.post('/journeys', (req, res) => {
-    const { origin_address, origin_city, destination_address, destination_city, created_on, start_datetime } = req.body
+    const { user_id, origin_address, origin_city, destination_address, destination_city, created_on, start_datetime } = req.body
 
-    pool.query('INSERT INTO journeys (origin_address, origin_city, destination_address, destination_city, created_on, start_datetime) VALUES ($1, $2, $3, $4, $5, $6) RETURNING journey_id', [origin_address, origin_city, destination_address, destination_city, created_on, start_datetime], (error, result) => {
+    pool.query('INSERT INTO journeys (user_id, origin_address, origin_city, destination_address, destination_city, created_on, start_datetime) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING journey_id', [user_id, origin_address, origin_city, destination_address, destination_city, created_on, start_datetime], (error, result) => {
         if (error) {
             throw error
         }
