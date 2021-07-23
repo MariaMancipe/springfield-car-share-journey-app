@@ -43,9 +43,9 @@ app.get('/journeys', (req, res) => {
     });
 });
 
-app.get('/journeys/:journeyId', (req, res) => {
-    var id = req.params.journeyId
-    pool.query('SELECT * FROM journeys WHERE journey_id = $1',[id], (error, results) => {
+app.get('/journeys/:userId', (req, res) => {
+    var id = req.params.userId
+    pool.query('SELECT * FROM journeys WHERE user_id = $1',[id], (error, results) => {
         if (error) {
           throw error
         }
